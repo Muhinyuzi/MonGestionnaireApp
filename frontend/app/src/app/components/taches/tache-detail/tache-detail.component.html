@@ -1,0 +1,111 @@
+<app-toast #toast></app-toast>
+
+<div *ngIf="isLoading" class="loading">⏳ Chargement...</div>
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+<div *ngIf="tache" class="tache-detail">
+
+  <!-- Mode lecture -->
+  <div *ngIf="!isEditing" class="view-mode">
+    <h2 class="tache-title">
+      📌 {{ tache.titre }}
+      <span *ngIf="(tache?.nb_vues || 0) > 100" class="badge-populaire">🔥 Populaire</span>
+      <span *ngIf="tache?.created_at && isNew(tache.created_at)" class="badge-nouveau">🆕 Nouveau</span>
+    </h2>
+
+    <p class="tache-content" [innerHTML]="tache.contenu"></p>
+
+    <p *ngIf="tache.resume_ia">
+      <strong>🧠 Résumé :</strong>
+      <span [innerHTML]="tache.resume_ia"></span>
+    </p>
+
+    <!-- Fichiers existants -->
+    <div class="tache-files" *ngIf="tache.fichiers?.length">
+      <h4>📎 Fichiers / Pièces jointes :</h4>
+      <ul>
+        <li *ngFor="let fichier of tache.fichiers">
+          <a [href]="getFileUrl(fichier.chemin)" download>{{ fichier.nom_fichier }}</a>
+          <button *ngIf="canEditOrDelete(tache)" type="button" class="remove-file-btn"
+            (click)="removeExistingFile(fichier.id)">❌</button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Infos -->
+    <div class="meta">
+      <p>👥 <strong>Équipe :</strong> {{ tache.equipe || '—' }}</p>
+      <p>✍️ <strong>Auteur :</strong> {{ tache.auteur?.nom || 'Inconnu' }}</p>
+      <p class="created">📅 <strong>Créée le :</strong> {{ tache.created_at | date:'short' }}</p>
+      <p *ngIf="tache.updated_at" class="updated">✏️ <strong>Modifiée le :</strong> {{ tache.updated_at | date:'short' }}</p>
+      <p *ngIf="tache.categorie"><strong>Catégorie :</strong> {{ tache.categorie }}</p>
+      <p *ngIf="tache.priorite"><strong>Priorité :</strong> {{ tache.priorite }}</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <span>👁️ Vues : {{ tache.nb_vues || 0 }}</span>
+      <span>❤️ Likes : {{ tache.likes || 0 }}
+        <button (click)="likeTache()" [disabled]="hasLiked">👍</button>
+      </span>
+    </div>
+
+    <div class="actions" *ngIf="canEditOrDelete(tache)">
+      <button (click)="isEditing = true" class="edit-btn">✏️ Éditer</button>
+      <button (click)="deleteTache()" class="delete-btn">🗑️ Supprimer</button>
+    </div>
+  </div>
+
+  <!-- Mode édition -->
+  <div *ngIf="isEditing" class="edit-mode">
+    <input [(ngModel)]="tache.titre" placeholder="Titre" class="edit-input" />
+
+    <kendo-editor [(ngModel)]="tache.contenu" [resizable]="true" placeholder="Contenu"></kendo-editor>
+
+    <!-- Équipe -->
+    <input [(ngModel)]="tache.equipe" placeholder="Équipe"
+      [readonly]="currentUser?.type !== 'admin'" class="edit-input" />
+
+    <!-- Catégorie -->
+    <select [(ngModel)]="tache.categorie" class="edit-select">
+      <option value="" disabled selected>-- Choisir une catégorie --</option>
+      <option value="Technique">Technique</option>
+      <option value="RH">Ressources humaines</option>
+      <option value="Administration">Administration</option>
+      <option value="Autre">Autre</option>
+    </select>
+
+    <!-- Priorité -->
+    <select [(ngModel)]="tache.priorite" class="edit-select">
+      <option value="" disabled selected>-- Choisir la priorité --</option>
+      <option value="basse">Basse</option>
+      <option value="moyenne">Moyenne</option>
+      <option value="haute">Haute</option>
+    </select>
+
+    <!-- Upload fichiers -->
+    <input type="file" #fileInput (change)="handleFileInput($event)" multiple class="edit-input">
+
+    <!-- Liste nouveaux fichiers -->
+    <div *ngIf="newFiles.length > 0" class="selected-files">
+      <p>📎 Nouveaux fichiers :</p>
+      <ul>
+        <li *ngFor="let f of newFiles; let i = index">
+          {{ f.name }}
+          <button type="button" class="remove-file-btn" (click)="removeFile(i)">❌</button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="actions">
+      <button (click)="updateTache()" class="save-btn">💾 Sauvegarder</button>
+      <button (click)="isEditing = false" class="cancel-btn">❌ Annuler</button>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Commentaires -->
+  <app-commentaires [tacheId]="tache.id"></app-commentaires>
+
+</div>

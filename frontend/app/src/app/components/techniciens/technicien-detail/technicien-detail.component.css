@@ -1,0 +1,254 @@
+/*************************************
+   🟦 LAYOUT GENERAL
+*************************************/
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+}
+
+h2 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 8px;
+}
+
+/*************************************
+   🟩 CARD PROFIL TECHNICIEN
+*************************************/
+.card {
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 18px;
+  display: flex;
+  gap: 24px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f1f5f9;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.avatar-lg {
+  width: 150px;
+  height: 150px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 3px solid #f1f5f9;
+}
+
+.info {
+  flex: 1;
+}
+
+.info h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.info p {
+  margin: 6px 0;
+  color: #334155;
+  font-size: 1rem;
+}
+
+.status {
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.inactive {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/*************************************
+   🟦 TÂCHES SECTION
+*************************************/
+.taches-section {
+  margin-top: 40px;
+}
+
+.taches-section h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 20px;
+}
+
+/*************************************
+   📝 CARTE TÂCHE
+*************************************/
+.tache-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+}
+
+.tache-card:hover {
+  transform: translateY(-3px);
+}
+
+.tache-card h4 {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.tache-content {
+  margin-bottom: 10px;
+  color: #334155;
+  line-height: 1.45;
+}
+
+.tache-meta {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-bottom: 14px;
+}
+
+/*************************************
+   🟦 BOUTONS TÂCHES
+*************************************/
+.tache-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.btn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  border: none;
+  font-size: 0.9rem;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+  transform: translateY(-2px);
+}
+
+/*************************************
+   🟡 MESSAGE "AUCUNE TÂCHE"
+*************************************/
+.no-taches {
+  padding: 12px;
+  background: #f1f5f9;
+  border-radius: 10px;
+  color: #475569;
+  font-style: italic;
+  text-align: center;
+}
+
+/*************************************
+   🔄 LOADER
+*************************************/
+.loader {
+  text-align: center;
+  font-size: 1.2em;
+  color: #0ea5e9;
+}
+
+/*************************************
+   🟥 MODALE DE CONFIRMATION
+*************************************/
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal {
+  background: #ffffff;
+  width: 380px;
+  padding: 26px;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+  animation: scaleIn 0.25s ease-in-out;
+  border: 1px solid #e2e8f0;
+}
+
+.modal h3 {
+  margin-bottom: 12px;
+  font-size: 1.35rem;
+  color: #1e293b;
+  font-weight: 700;
+}
+
+.modal p {
+  margin-bottom: 22px;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+}
+
+.btn-secondary {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+.btn-secondary:hover {
+  background: #cbd5e1;
+}
+
+/*************************************
+   🎞 ANIMATIONS
+*************************************/
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

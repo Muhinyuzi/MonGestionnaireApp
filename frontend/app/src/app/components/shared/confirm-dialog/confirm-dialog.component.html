@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+
+<mat-dialog-content>
+  <p>{{ data.message }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+  <!-- Mode CONFIRMATION : Annuler + Confirmer -->
+  <ng-container *ngIf="mode === 'confirm'; else alertTemplate">
+    <button mat-button (click)="onCancel()">Annuler</button>
+    <button mat-button color="warn" (click)="onConfirm()">Confirmer</button>
+  </ng-container>
+
+  <!-- Mode ALERT : bouton OK -->
+  <ng-template #alertTemplate>
+    <button mat-button color="primary" (click)="onConfirm()">OK</button>
+  </ng-template>
+
+</mat-dialog-actions>

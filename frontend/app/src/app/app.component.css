@@ -1,0 +1,123 @@
+/* Conteneur principal */
+.app-container {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
+}
+
+/* Titre */
+h1 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Barre de navigation */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* Logo */
+.logo {
+  color: white;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+}
+
+/* Liens */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+.nav-links a:hover {
+  color: #ffdd57;
+  transform: scale(1.05);
+}
+.nav-links a.active {
+  position: relative;
+}
+.nav-links a.active::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 50%;
+  height: 3px;
+  background: #ffdd57;
+  border-radius: 2px;
+}
+
+/* Bouton Logout */
+.logout-btn {
+  background: #ff4757;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.logout-btn:hover {
+  background: #e84118;
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    flex-direction: column;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    width: 200px;
+    padding: 15px;
+    display: none;
+    border-radius: 0 0 8px 8px;
+    z-index: 100;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+}

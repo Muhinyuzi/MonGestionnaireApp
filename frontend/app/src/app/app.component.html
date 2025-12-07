@@ -1,0 +1,76 @@
+<div class="container mt-4 app-container">
+
+  <!-- NAVIGATION (visible uniquement si utilisateur connecté) -->
+  <nav *ngIf="isLoggedIn()">
+    
+    <!-- Logo -->
+    <div class="logo">MonGestionnaireApp</div>
+
+    <!-- Hamburger Menu -->
+    <div class="hamburger" (click)="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+
+    <!-- Liens de navigation -->
+    <div class="nav-links" [class.show]="menuOpen">
+
+      <a routerLink="/" 
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }"
+         (click)="closeMenu()">
+        🏠 Accueil
+      </a>
+
+      <!-- Liens Admin -->
+      <a *ngIf="isAdmin()" 
+         routerLink="/utilisateurs" 
+         routerLinkActive="active" 
+         (click)="closeMenu()">
+        👥 Utilisateurs
+      </a>
+
+      <a *ngIf="isAdmin()"
+         routerLink="/techniciens"
+         routerLinkActive="active"
+         (click)="closeMenu()">
+        🔧 Techniciens
+      </a>
+
+      <!-- Lien profil utilisateur (non-admin) -->
+      <a *ngIf="!isAdmin()" 
+         [routerLink]="['/utilisateurs', getUserId()]"
+         routerLinkActive="active"
+         (click)="closeMenu()">
+        🙍‍♂️ Mon profil
+      </a>
+
+      <!-- SECTION TÂCHES (remplace Notes) -->
+      <a routerLink="/taches"
+         routerLinkActive="active"
+         (click)="closeMenu()">
+        📝 Tâches
+      </a>
+
+      <!-- Déconnexion -->
+      <button *ngIf="isLoggedIn()" 
+              (click)="logout()" 
+              class="logout-btn">
+        🚪 Logout
+      </button>
+
+    </div>
+  </nav>
+
+  <hr />
+
+  <!-- CONTENU DES PAGES -->
+  <div class="page-content">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
+
+<!-- ⛔️ Pas ici : le toast global doit être dans ton app.component.html 
+     uniquement si tu veux qu’il apparaisse sur TOUTES les pages -->
+
+<!-- Toast global --> <!--<app-toast></app-toast>-->
