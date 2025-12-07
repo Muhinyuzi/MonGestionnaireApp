@@ -1,0 +1,121 @@
+<!-- 🔙 Bouton retour -->
+<button class="btn-back" (click)="goBack()">← Retour</button>
+
+<!-- ⏳ Loader -->
+<div *ngIf="isLoading" class="loading-container">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  <p>Chargement en cours...</p>
+</div>
+
+<app-toast #toast></app-toast>
+
+<!-- ✅ Profil utilisateur -->
+<div *ngIf="!isLoading && utilisateur" class="profile-container">
+  <mat-card class="user-card">
+    
+    <!-- 🧍 Avatar -->
+    <div class="avatar-section">
+      <img [src]="avatarUrl" alt="Avatar" class="avatar" />
+
+      <div class="avatar-actions">
+        <input #fileInput type="file" (change)="onAvatarSelected($event)" accept="image/*" hidden>
+        <button mat-stroked-button color="primary" (click)="openFilePicker(fileInput)">
+          📤 Choisir une image
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="uploadAvatar()"
+          [disabled]="!selectedFile">
+          💾 Upload
+        </button>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <!-- 🧾 Informations utilisateur -->
+    <div class="user-info">
+      <h2>{{ utilisateur.nom }}</h2>
+      <p class="email">{{ utilisateur.email }}</p>
+      <p class="role" [ngClass]="{ 'admin': utilisateur.type === 'admin' }">
+        {{ utilisateur.type | titlecase }}
+      </p>
+
+      <mat-divider></mat-divider>
+
+      <!-- 📄 Mode lecture -->
+      <div *ngIf="!isEditing" class="info-section">
+        <p><strong>Équipe :</strong> {{ utilisateur.equipe || 'Non spécifiée' }}</p>
+        <p><strong>Adresse :</strong> {{ utilisateur.adresse || 'Non spécifiée' }}</p>
+        <p><strong>Téléphone :</strong> {{ utilisateur.telephone || 'Non spécifié' }}</p>
+
+        <!-- 🧩 Boutons d’action -->
+        <div class="actions">
+          <button mat-raised-button color="primary" (click)="isEditing = true">✏️ Modifier</button>
+          <button mat-raised-button color="warn" (click)="deleteUtilisateur()">🗑 Supprimer</button>
+
+          <!-- 🔑 Cas 1 : l’utilisateur connecté est sur son propre profil -->
+          <button
+            *ngIf="isCurrentUser()"
+            mat-stroked-button
+            color="accent"
+            (click)="goToChangePassword()">
+            🧍 Changer mon mot de passe
+          </button>
+
+          <!-- 👑 Cas 2 : admin sur un autre utilisateur -->
+          <button
+            *ngIf="isAdmin() && !isCurrentUser()"
+            mat-stroked-button
+            color="primary"
+            (click)="openChangePasswordDialog()">
+            🔑 Changer le mot de passe de cet utilisateur
+          </button>
+        </div>
+      </div>
+
+      <!-- 🧾 Formulaire édition -->
+      <form *ngIf="isEditing" class="edit-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input matInput [(ngModel)]="utilisateur.nom" required name="nom">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="utilisateur.email" name="email" type="email" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Équipe</mat-label>
+            <input matInput [(ngModel)]="utilisateur.equipe" 
+             name="equipe" 
+                 readonly
+                 disabled
+            >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Adresse</mat-label>
+          <input matInput [(ngModel)]="utilisateur.adresse" name="adresse">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Téléphone</mat-label>
+          <input matInput [(ngModel)]="utilisateur.telephone" name="telephone" type="tel">
+        </mat-form-field>
+
+        <div class="edit-buttons">
+          <button mat-raised-button color="primary" (click)="updateUtilisateur()">💾 Sauvegarder</button>
+          <button mat-stroked-button color="accent" (click)="isEditing = false">❌ Annuler</button>
+        </div>
+      </form>
+    </div>
+  </mat-card>
+</div>
+
+<!-- 🧭 Aucun utilisateur -->
+<div *ngIf="!isLoading && !utilisateur">
+  <p>Aucun utilisateur trouvé.</p>
+</div>

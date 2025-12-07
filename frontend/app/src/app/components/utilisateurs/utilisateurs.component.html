@@ -1,0 +1,127 @@
+<div class="utilisateurs-container">
+
+  <!-- 🔙 Bouton retour -->
+  <button class="btn-back" (click)="goBack()">← Retour</button>
+
+  <app-toast></app-toast>
+
+  <!-- Header avec titre et bouton Ajouter -->
+  <header class="utilisateurs-header">
+    <h2>Gestion des utilisateurs</h2>
+    <button class="btn-add" *ngIf="!isAdding && !isEditing" (click)="startAdding()">
+      ➕ Ajouter un utilisateur
+    </button>
+  </header>
+
+  <!-- Liste et filtres -->
+  <section *ngIf="!isAdding && !isEditing" class="utilisateurs-liste-section">
+
+    <!-- Filtres -->
+    <div class="filters">
+      <input type="text" [(ngModel)]="filterNom" placeholder="Filtrer par nom">
+      <input type="text" [(ngModel)]="filterEmail" placeholder="Filtrer par email">
+      <input type="text" [(ngModel)]="filterEquipe" placeholder="Filtrer par équipe">
+      <button class="btn-filters" (click)="applyFilters()">🔍 Appliquer filtres</button>
+    </div>
+
+    <!-- Loader et message d'erreur -->
+    <div *ngIf="isLoading" class="loading">Chargement en cours...</div>
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+    <!-- Liste des utilisateurs -->
+    <ul class="utilisateurs-list" *ngIf="!isLoading && !errorMessage && filteredUsers.length > 0">
+      <li *ngFor="let u of filteredUsers">
+        <div class="utilisateur-header">
+          <a [routerLink]="['/utilisateurs', u.id]" class="utilisateur-nom">{{ u.nom }}</a>
+          <div class="utilisateur-actions">
+            <button (click)="editUtilisateur(u)" title="Éditer utilisateur">✏️</button>
+            <button (click)="deleteUtilisateur(u)" title="Supprimer utilisateur">🗑️</button>
+          </div>
+        </div>
+        <div class="utilisateurs-meta">
+          <p><strong>Email :</strong> {{ u.email }}</p>
+          <p><strong>Équipe :</strong> {{ u.equipe || 'Aucune' }}</p>
+          <p><strong>Adresse :</strong> {{ u.adresse || 'Non spécifiée' }}</p>
+          <p><strong>Téléphone :</strong> {{ u.telephone || 'Non spécifié' }}</p>
+          <p><strong>Rôle :</strong> {{ u.type || 'Utilisateur' }}</p>
+        </div>
+      </li>
+    </ul>
+
+    <div *ngIf="!isLoading && filteredUsers.length === 0" class="no-users">
+      Aucun utilisateur trouvé.
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="total > limit">
+      <button (click)="goToPage(page - 1)" [disabled]="page === 1">⬅️ Précédent</button>
+      <span>Page {{ page }} / {{ totalPages }}</span>
+      <button (click)="goToPage(page + 1)" [disabled]="page === totalPages">Suivant ➡️</button>
+    </div>
+
+  </section>
+
+  <!-- Formulaire ajout / édition -->
+<section *ngIf="isAdding || isEditing" class="form-section">
+  <h3>{{ isEditing ? 'Modifier utilisateur' : 'Ajouter un utilisateur' }}</h3>
+
+  <form class="add-utilisateur-form" (ngSubmit)="isEditing ? updateUtilisateur() : addUtilisateur()">
+
+    <input type="text" [(ngModel)]="formUser.nom" name="nom" placeholder="Nom complet" required>
+
+    <input type="email" [(ngModel)]="formUser.email" name="email" placeholder="Adresse email" required>
+
+    <!-- ✅ Mot de passe seulement EN CREATION -->
+<!-- ✅ Mot de passe généré automatiquement (en création uniquement) -->
+<div *ngIf="!isEditing" class="password-generator">
+  <label for="mot_de_passe">Mot de passe généré</label>
+  <div class="password-field">
+    <input 
+      type="text"
+      id="mot_de_passe"
+      [(ngModel)]="formUser.mot_de_passe"
+      name="mot_de_passe"
+      readonly
+    >
+    <button type="button" class="btn-generate" (click)="generatePassword()">🔄 Régénérer</button>
+  </div>
+  <small class="hint">Ce mot de passe sera envoyé par email à l'utilisateur.</small>
+</div>
+
+    <!-- 🔽 Menu déroulant pour ÉQUIPE -->
+    <label for="equipe">Équipe</label>
+    <select id="equipe" name="equipe" [(ngModel)]="formUser.equipe" class="select-field">
+      <option value="">-- Sélectionnez une équipe --</option>
+      <option *ngFor="let e of equipes" [value]="e">{{ e }}</option>
+    </select>
+
+    <input type="text" [(ngModel)]="formUser.adresse" name="adresse" placeholder="Adresse">
+    <input type="text" [(ngModel)]="formUser.telephone" name="telephone" placeholder="Téléphone">
+
+    <!-- 🔽 Menu déroulant pour TYPE -->
+    <label for="type">Rôle</label>
+    <select id="type" name="type" [(ngModel)]="formUser.type" class="select-field">
+      <option value="">-- Sélectionnez un rôle --</option>
+      <option *ngFor="let t of typesUtilisateurs" [value]="t">{{ t | titlecase }}</option>
+    </select>
+
+    <!-- ✅ Bouton changer mot de passe (uniquement en édition) -->
+    <button 
+      *ngIf="isEditing && selectedUser.id" 
+      type="button" 
+      class="btn-reset"
+      (click)="openChangePasswordDialog(selectedUser)">
+      {{ isCurrentUser(selectedUser) ? '🔑 Changer mon mot de passe' : '🔒 Changer le mot de passe' }}
+    </button>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-submit">
+        {{ isEditing ? 'Mettre à jour' : 'Ajouter' }}
+      </button>
+      <button type="button" class="btn-cancel" (click)="cancelForm()">Annuler</button>
+    </div>
+
+  </form>
+</section>
+
+</div>

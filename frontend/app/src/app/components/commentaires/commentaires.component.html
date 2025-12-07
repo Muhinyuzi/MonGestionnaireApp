@@ -1,0 +1,26 @@
+<div class="comment-section">
+  <h5>Commentaires</h5>
+
+  <!-- Liste des commentaires -->
+  <div *ngFor="let c of commentaires" class="comment">
+    <p>{{ c.contenu }}</p>
+    <small>
+      Auteur : {{ c.auteur?.nom || 'ID ' + c.auteur_id }} - {{ c.date | date:'short' }}
+    </small>
+  </div>
+
+  <!-- Formulaire ajout -->
+  <form (ngSubmit)="addComment()">
+    <textarea
+      [(ngModel)]="newComment.contenu"
+      name="commentContent"
+      placeholder="Écrire un commentaire..."
+      required
+    ></textarea>
+    <br />
+    <button type="submit">Ajouter</button>
+  </form>
+
+  <!-- Message d'erreur -->
+  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+</div>

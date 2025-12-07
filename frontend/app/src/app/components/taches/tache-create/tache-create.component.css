@@ -1,0 +1,165 @@
+/* ===================== Tâches Container ===================== */
+.taches-container {
+  max-width: 650px;
+  margin: 2rem auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  animation: fadeIn 0.25s ease;
+}
+
+/* ===================== Back Button ===================== */
+.btn-back {
+  background: transparent;
+  border: none;
+  color: #3b82f6;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 14px;
+  transition: 0.2s;
+}
+.btn-back:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* ===================== Title ===================== */
+.taches-container h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1e293b;
+  border-left: 6px solid #3b82f6;
+  padding-left: 12px;
+  margin-bottom: 1.4rem;
+}
+
+/* ===================== Add Form ===================== */
+.add-tache-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.add-tache-form input,
+.add-tache-form select {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  font-size: 0.95rem;
+  transition: 0.2s;
+}
+
+.add-tache-form input:focus,
+.add-tache-form select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, .25);
+}
+
+/* ===================== Selected Files ===================== */
+.selected-files {
+  margin-top: 8px;
+  padding: 10px;
+  background: #f8fafc;
+  border-radius: 10px;
+}
+
+.selected-files ul {
+  margin: 6px 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.selected-files li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 8px;
+  margin-bottom: 5px;
+  background: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.remove-file-btn {
+  border: none;
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.remove-file-btn:hover {
+  background: #dc2626;
+  color: white;
+}
+
+/* ===================== Preview ===================== */
+.tache-preview {
+  margin-top: 10px;
+  padding: 10px;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.preview-box {
+  background: white;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #dfe4ea;
+  min-height: 120px;
+}
+
+/* ===================== Submit Button ===================== */
+.add-tache-form button {
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #3b82f6;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.add-tache-form button:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+/* ===================== Responsive ===================== */
+@media (max-width: 650px) {
+  .taches-container {
+    padding: 18px;
+  }
+
+  .add-tache-form button {
+    width: 100%;
+  }
+}
+
+/* ===================== Kendo Editor ===================== */
+kendo-editor {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+  background: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.k-editor-content {
+  min-height: 220px;
+}
+
+/* Fade In */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}

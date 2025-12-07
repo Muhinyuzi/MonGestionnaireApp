@@ -1,0 +1,274 @@
+/* 🌟 Structure principale */
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
+  background-color: #f9fafc;
+  min-height: 100vh;
+}
+
+.user-card {
+  max-width: 500px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* 🖼️ Section avatar */
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+  background: linear-gradient(145deg, #1976d2, #2196f3);
+  color: white;
+  text-align: center;
+  position: relative;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  object-fit: cover;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+}
+
+.avatar-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.avatar-actions button {
+  font-size: 13px;
+  border-radius: 50px;
+  padding: 6px 18px;
+  margin-top: 5px;
+  background: white;
+  color: #1976d2;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.avatar-actions button:hover {
+  background: #e3f2fd;
+}
+
+/* 👤 Infos utilisateur */
+.user-info {
+  padding: 20px 25px 30px;
+}
+
+.user-info h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.user-info .email {
+  color: #666;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.role {
+  text-align: center;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #1976d2;
+  margin-bottom: 20px;
+}
+
+.role.admin {
+  color: #d32f2f;
+}
+
+/* 🧾 Détails */
+.info-section p {
+  margin: 10px 0;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.info-section strong {
+  color: #111;
+}
+
+/* ✏️ Boutons d’action */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.actions button {
+  flex: 1 1 45%;
+  min-width: 140px;
+  border-radius: 8px;
+  font-weight: 500;
+  text-transform: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.actions button[color="primary"] {
+  background-color: #1976d2;
+  color: white;
+}
+
+.actions button[color="primary"]:hover {
+  background-color: #1565c0;
+}
+
+.actions button[color="warn"] {
+  background-color: #f44336;
+  color: white;
+}
+
+.actions button[color="warn"]:hover {
+  background-color: #d32f2f;
+}
+
+/* 🔑 Boutons de changement de mot de passe */
+.actions button[color="accent"],
+.actions .btn-change-self,
+.actions .btn-change-admin {
+  border: 1px solid #2563eb;
+  font-weight: 500;
+  background: white;
+  color: #2563eb;
+  transition: all 0.2s ease;
+}
+
+.actions button[color="accent"]:hover,
+.actions .btn-change-self:hover,
+.actions .btn-change-admin:hover {
+  background: #2563eb;
+  color: white;
+}
+
+/* 👑 Cas admin : changement pour un autre utilisateur */
+.actions .btn-change-admin {
+  border: 1px solid #1e40af;
+  color: #1e40af;
+}
+.actions .btn-change-admin:hover {
+  background: #1e40af;
+  color: white;
+}
+
+/* ✍️ Formulaire édition */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.edit-buttons button {
+  min-width: 130px;
+  border-radius: 8px;
+  text-transform: none;
+  font-weight: 500;
+}
+
+/* ⏳ Loader */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  color: #1976d2;
+}
+
+.loading-container p {
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+/* 🔙 Bouton Retour */
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid #475569;
+  color: #475569;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 18px;
+  transition: all 0.25s ease-in-out;
+}
+
+.btn-back:hover {
+  background: #475569;
+  color: #ffffff;
+  transform: translateX(-3px);
+  box-shadow: 0 4px 10px rgba(55, 65, 81, 0.2);
+}
+
+.btn-back:active {
+  transform: scale(0.97);
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 20px;
+  }
+
+  .user-card {
+    max-width: 100%;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .actions button {
+    width: 100%;
+  }
+
+  .avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .btn-back {
+    width: 100%;
+    justify-content: center;
+  }
+}

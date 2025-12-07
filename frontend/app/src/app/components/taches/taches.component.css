@@ -1,0 +1,207 @@
+/* === Style général du conteneur === */
+.taches-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  padding: 24px 30px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.taches-container h2 {
+  text-align: center;
+  color: #1e293b;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+/* === Bouton "Créer une nouvelle tâche" === */
+.create-tache-btn {
+  display: inline-block;
+  background: linear-gradient(90deg, #2b7bb9, #1e6393);
+  color: #fff;
+  text-decoration: none;
+  padding: 11px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(43, 123, 185, 0.25);
+  transition: all 0.25s ease;
+}
+
+.create-tache-btn:hover {
+  background: #1e6393;
+  transform: translateY(-2px);
+}
+
+/* === Filtres === */
+.taches-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 22px 0;
+  align-items: center;
+}
+
+.taches-filters input,
+.taches-filters select {
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  flex: 1;
+  min-width: 150px;
+  background: #f8fafc;
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+.taches-filters button {
+  background-color: #2b7bb9;
+  color: white;
+  border: none;
+  padding: 9px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.25s ease;
+}
+
+.taches-filters button:hover {
+  background-color: #1e6393;
+}
+
+/* === Liste des tâches === */
+.taches-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.taches-list li {
+  background: #f8fafc;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.taches-list li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.taches-list li a {
+  color: #2b7bb9;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.taches-list li a:hover {
+  text-decoration: underline;
+}
+
+/* === Métadonnées (équipe, auteur, dates...) === */
+.taches-meta {
+  margin-top: 10px;
+  color: #475569;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+/* --- BADGE pour "Créée le" --- */
+.taches-meta .created {
+  display: inline-block;
+  background-color: #e3f2fd;
+  color: #1565c0;
+  padding: 3px 9px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-left: 6px;
+}
+
+/* --- Style pour "Modifiée le" --- */
+.taches-meta .updated {
+  display: inline-block;
+  background-color: #fff3e0;
+  color: #ef6c00;
+  padding: 3px 9px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-left: 6px;
+}
+
+.taches-meta .updated::before {
+  content: "•";
+  color: #999;
+  margin: 0 6px;
+}
+
+/* Icône fichiers */
+.taches-meta .file-count {
+  margin-left: 10px;
+  color: #475569;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* === Pagination === */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 25px;
+}
+
+.pagination button {
+  background: #2b7bb9;
+  color: #fff;
+  border: none;
+  padding: 9px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.pagination button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #1e6393;
+  transform: translateY(-2px);
+}
+
+/* === Responsive === */
+@media (max-width: 650px) {
+  .taches-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .create-tache-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .taches-list li {
+    padding: 14px;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .taches-meta {
+    font-size: 0.85rem;
+  }
+}

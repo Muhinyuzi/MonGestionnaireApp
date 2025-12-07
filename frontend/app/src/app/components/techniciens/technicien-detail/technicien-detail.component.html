@@ -1,0 +1,82 @@
+<div class="container" *ngIf="!isLoading && technicien; else loadingTpl">
+
+  <h2>Détails du technicien</h2>
+
+  <div class="card">
+    <img [src]="technicien.avatar_url || 'assets/default-avatar.png'" class="avatar-lg">
+
+    <div class="info">
+      <h3>{{ technicien.nom }}</h3>
+      <p><strong>Email :</strong> {{ technicien.email }}</p>
+      <p><strong>Équipe :</strong> {{ technicien.equipe || 'Aucune' }}</p>
+      <p><strong>Poste :</strong> {{ technicien.poste || 'Non défini' }}</p>
+      <p><strong>Téléphone :</strong> {{ technicien.telephone || 'Non spécifié' }}</p>
+      <p><strong>Adresse :</strong> {{ technicien.adresse || 'Non spécifiée' }}</p>
+      <p><strong>Statut :</strong>   
+        <span class="status"
+              [ngClass]="technicien.is_active ? 'active' : 'inactive'">
+            {{ technicien.is_active ? 'Actif' : 'Inactif' }}
+        </span>
+      </p>
+    </div>
+  </div>
+
+
+  <!-- 🟦 TÂCHES ASSIGNÉES -->
+  <div class="taches-section">
+    <h3>📝 Tâches assignées</h3>
+
+    <div *ngIf="technicien.assignations?.length! > 0; else noTachesTpl">
+
+      <div class="tache-card" *ngFor="let tache of technicien.assignations">
+        <h4>{{ tache.titre }}</h4>
+
+        <p class="tache-content">{{ tache.contenu }}</p>
+
+        <p class="tache-meta">
+          <strong>Date :</strong> {{ tache.created_at | date:'medium' }} <br>
+          <strong>Auteur :</strong> {{ tache.auteur?.nom || 'Inconnu' }}
+        </p>
+
+        <div class="tache-actions">
+          <button class="btn btn-primary" [routerLink]="['/taches', tache.id]">
+            Voir
+          </button>
+
+          <button class="btn btn-danger" (click)="openConfirmUnassign(tache.id)">
+            ❌ Désassigner
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <ng-template #noTachesTpl>
+      <p class="no-taches">Aucune tâche assignée.</p>
+    </ng-template>
+
+  </div>
+</div>
+
+
+<ng-template #loadingTpl>
+  <p class="loader">Chargement...</p>
+</ng-template>
+
+
+<!-- 🟥 MODALE CONFIRMATION DÉSASSIGNATION -->
+<div class="modal-overlay" *ngIf="showUnassignModal">
+  <div class="modal">
+    <h3>Confirmer la désassignation</h3>
+
+    <p>
+      Voulez-vous vraiment désassigner cette tâche de 
+      <strong>{{ technicien?.nom }}</strong> ?
+    </p>
+
+    <div class="modal-actions">
+      <button class="btn btn-secondary" (click)="closeUnassignModal()">Annuler</button>
+      <button class="btn btn-danger" (click)="confirmUnassign()">Confirmer</button>
+    </div>
+  </div>
+</div>

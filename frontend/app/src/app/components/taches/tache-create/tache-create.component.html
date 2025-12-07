@@ -1,0 +1,69 @@
+<div class="taches-container">
+
+  <app-toast></app-toast>
+
+  <!-- 🔙 Bouton retour -->
+  <button class="btn-back" (click)="goBack()">← Retour</button>
+
+  <h3>➕ Créer une nouvelle tâche</h3>
+
+  <form class="add-tache-form" (ngSubmit)="addTache()">
+
+    <!-- Titre -->
+    <input type="text" [(ngModel)]="newTache.titre" name="titre" placeholder="Titre" required>
+
+    <!-- Contenu -->
+    <label for="contenu">Contenu</label>
+    <kendo-editor
+      [(ngModel)]="newTache.contenu"
+      name="contenu"
+      [resizable]="true"
+      style="height: 300px;"
+      required>
+    </kendo-editor>
+
+    <!-- Aperçu -->
+    <div class="tache-preview">
+      <h4>👀 Aperçu</h4>
+      <div class="preview-box" [innerHTML]="newTache.contenu"></div>
+    </div>
+
+    <!-- Équipe readonly -->
+    <input type="text" [(ngModel)]="newTache.equipe" name="equipe" placeholder="Équipe" readonly>
+
+    <!-- Catégorie -->
+    <select [(ngModel)]="newTache.categorie" name="categorie" required>
+      <option value="" disabled selected>-- Choisir une catégorie --</option>
+      <option value="Technique">Technique</option>
+      <option value="RH">Ressources humaines</option>
+      <option value="Administration">Administration</option>
+      <option value="Autre">Autre</option>
+    </select>
+
+    <!-- Priorité -->
+    <select [(ngModel)]="newTache.priorite" name="priorite" required>
+      <option value="" disabled selected>-- Choisir la priorité --</option>
+      <option value="basse">Basse</option>
+      <option value="moyenne">Moyenne</option>
+      <option value="haute">Haute</option>
+    </select>
+
+    <!-- Upload fichiers -->
+    <input type="file" (change)="handleFileInput($event)" multiple>
+
+    <!-- Liste des fichiers sélectionnés -->
+    <div *ngIf="newFiles.length > 0" class="selected-files">
+      <p>📎 Fichiers sélectionnés :</p>
+      <ul>
+        <li *ngFor="let f of newFiles; let i = index">
+          {{ f.name }}
+          <button type="button" class="remove-file-btn" (click)="removeFile(i)">❌</button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Bouton Ajouter -->
+    <button type="submit" [disabled]="isSubmitting">Créer la tâche</button>
+
+  </form>
+</div>

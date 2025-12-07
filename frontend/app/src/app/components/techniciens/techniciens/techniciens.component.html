@@ -1,0 +1,117 @@
+<div class="techniciens-container">
+
+  <!-- 🔙 Bouton retour -->
+  <button class="btn-back" (click)="goBack()">← Retour</button>
+
+  <h2>Liste des techniciens</h2>
+
+  <div *ngIf="isLoading" class="loading">Chargement en cours...</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <!-- ➕ Bouton ajouter -->
+  <div class="actions-bar">
+    <button class="btn add" (click)="addTechnicien()">➕ Ajouter un technicien</button>
+  </div>
+
+  <!-- 🧾 Tableau des techniciens -->
+  <table class="techniciens-table" *ngIf="!isLoading && techniciens.length > 0">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Équipe</th>
+        <th>Tâche assignée</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let tech of techniciens">
+
+        <!-- NOM CLIQUABLE -->
+        <td>
+          <a [routerLink]="['/techniciens', tech.id]" class="tech-link">
+            {{ tech.nom }}
+          </a>
+        </td>
+
+        <td>{{ tech.email }}</td>
+        <td>{{ tech.equipe || '-' }}</td>
+
+        <!-- TÂCHES ASSIGNÉES -->
+        <td>
+          <span *ngIf="tech.tache_id; else assignButton">
+            📝 Tâche #{{ tech.tache_id }}
+          </span>
+
+          <ng-template #assignButton>
+            <button class="btn btn-info btn-sm" (click)="openAssignModal(tech)">
+              ➕ Assigner une tâche
+            </button>
+          </ng-template>
+        </td>
+
+        <!-- ACTIONS -->
+        <td>
+          <div class="actions-buttons">
+            <button class="btn btn-info" (click)="editTechnicien(tech)">✏️ Éditer</button>
+            <button class="btn btn-danger" (click)="deleteTechnicien(tech)">🗑️ Supprimer</button>
+
+            <button *ngIf="tech.tache_id"
+                    class="btn btn-warning"
+                    (click)="openDeassignModal(tech)">
+              ❌ Désassigner
+            </button>
+          </div>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- 🔵 MODALE ASSIGNATION / DÉSASSIGNATION TÂCHE -->
+  <div class="modal-overlay" *ngIf="showTacheModal">
+    <div class="modal" [ngClass]="{ 'danger': modalMode === 'deassign' }">
+
+      <!-- TITRE -->
+      <h3 *ngIf="modalMode === 'assign'">
+        Assigner une tâche à {{ modalTech?.nom }}
+      </h3>
+
+      <h3 *ngIf="modalMode === 'deassign'">
+        Désassigner la tâche de {{ modalTech?.nom }}
+      </h3>
+
+      <!-- ASSIGNATION -->
+      <div *ngIf="modalMode === 'assign'">
+        <label>Choisir une tâche :</label>
+
+        <select [(ngModel)]="selectedTacheId">
+          <option [ngValue]="null">-- sélectionner --</option>
+          <option *ngFor="let t of taches" [ngValue]="t.id">
+            {{ t.titre }}
+          </option>
+        </select>
+      </div>
+
+      <!-- DÉSASSIGNATION -->
+      <div *ngIf="modalMode === 'deassign'">
+        <p>Tâche actuelle : <strong>{{ selectedTacheTitle }}</strong></p>
+      </div>
+
+      <!-- BOUTONS -->
+      <div class="modal-actions">
+        <button class="btn btn-primary" (click)="confirmTacheAction()">
+          Confirmer
+        </button>
+
+        <button class="btn btn-secondary" (click)="closeTacheModal()">
+          Annuler
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

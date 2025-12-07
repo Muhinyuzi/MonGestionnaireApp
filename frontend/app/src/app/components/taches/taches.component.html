@@ -1,0 +1,93 @@
+<div class="taches-container">
+  <h2>📋 Liste des tâches</h2>
+
+  <!-- 🔥 Bouton réservé uniquement à l’ADMIN -->
+  <a *ngIf="isAdmin"
+     routerLink="/taches/create"
+     class="create-tache-btn">
+    ➕ Créer une nouvelle tâche
+  </a>
+
+  <!-- 🔎 FILTRES / RECHERCHE -->
+  <div class="taches-filters">
+
+    <!-- Recherche par mot-clé -->
+    <input type="text"
+           [(ngModel)]="searchTerm"
+           placeholder="Rechercher un mot-clé...">
+
+    <!-- 🔥 Filtre auteur : ADMIN seulement -->
+    <input *ngIf="isAdmin"
+           type="text"
+           [(ngModel)]="selectedAuteur"
+           placeholder="Filtrer par auteur...">
+
+    <!-- Tri -->
+    <select [(ngModel)]="sort">
+      <option value="date_desc">Date décroissante</option>
+      <option value="date_asc">Date croissante</option>
+    </select>
+
+    <button (click)="applyFilters()">Appliquer</button>
+  </div>
+
+  <!-- 🧾 LISTE DES TÂCHES -->
+  <ul class="taches-list">
+
+    <li *ngFor="let t of taches">
+
+      <!-- Titre -->
+      <a [routerLink]="['/taches', t.id]">
+        <strong>{{ t.titre }}</strong>
+      </a>
+
+      • <span [innerHTML]="sanitize(t.contenu)"></span>
+
+      <!-- Métadonnées -->
+      <div class="taches-meta">
+
+        <!-- ADMIN : voir équipe + auteur -->
+        <span *ngIf="isAdmin">
+          (Équipe : {{ t.equipe || '—' }}) —
+          Auteur : {{ t.auteur?.nom || 'Inconnu' }}
+          <br>
+        </span>
+
+        <!-- USER : voir uniquement sa propre équipe -->
+        <span *ngIf="!isAdmin">
+          (Votre équipe : {{ currentUser?.equipe || '—' }})
+          <br>
+        </span>
+
+        <!-- Dates -->
+        📅 Créée le :
+        <span class="created">{{ t.created_at | date:'short' }}</span>
+
+        <span *ngIf="t.updated_at" class="updated">
+          — Modifiée le : {{ t.updated_at | date:'short' }}
+        </span>
+
+        <!-- Fichiers -->
+        <span *ngIf="t.fichiers && t.fichiers.length > 0">
+          📎 {{ t.fichiers.length }}
+        </span>
+
+      </div>
+
+    </li>
+
+  </ul>
+
+  <!-- 📄 PAGINATION -->
+  <div class="pagination">
+    <button [disabled]="page === 1" (click)="goToPage(page - 1)">
+      Précédent
+    </button>
+
+    <span>Page {{ page }} / {{ totalPages }}</span>
+
+    <button [disabled]="page >= totalPages" (click)="goToPage(page + 1)">
+      Suivant
+    </button>
+  </div>
+</div>

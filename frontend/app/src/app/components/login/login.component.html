@@ -1,0 +1,45 @@
+<div class="login-container">
+  <h2>🔑 Connexion</h2>
+
+  <form (ngSubmit)="login()">
+    <input
+      type="email"
+      [(ngModel)]="email"
+      name="email"
+      placeholder="Email"
+      required
+    />
+
+    <input
+      type="password"
+      [(ngModel)]="password"
+      name="password"
+      placeholder="Mot de passe"
+      required
+    />
+
+    <button type="submit" [disabled]="sending">
+      {{ sending ? 'Connexion...' : 'Se connecter' }}
+    </button>
+  </form>
+
+  <!-- Message d'erreur -->
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
+  <!-- Lien “Mot de passe oublié ?” -->
+  <div class="forgot">
+    <a routerLink="/forgot-password">Mot de passe oublié ?</a>
+  </div>
+
+  <!-- Bouton de renvoi d'activation -->
+  <div class="activation" *ngIf="errorMessage?.includes('activé') && !activationSent">
+    <button type="button" class="resend-btn" (click)="resendActivation()">
+      Renvoyer le lien d’activation 🔁
+    </button>
+  </div>
+
+  <!-- Message de succès -->
+  <p *ngIf="activationSent" class="success">
+    ✅ Email de réactivation envoyé !
+  </p>
+</div>
