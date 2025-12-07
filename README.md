@@ -1,41 +1,112 @@
-📋 Gestion des Tâches & Employés
+📘 MonGestionnaireApp
 
-Application web full-stack professionnelle permettant la gestion des utilisateurs et des tâches avec rôles, assignation, sécurité et pagination.
-Ce projet démontre une architecture moderne backend / frontend prête pour un environnement professionnel.
+MonGestionnaireApp est une application web full-stack moderne de gestion des employés et des tâches.
+Elle est conçue avec une architecture professionnelle, sécurisée, testée, dockerisée et prête pour la production.
 
-🎯 Objectifs du projet
+Ce projet sert de projet portfolio et démontre ma maîtrise du backend, frontend, sécurité, DevOps et CI/CD, selon des standards utilisés en entreprise.
 
-Centraliser la gestion des tâches d’une organisation
+🚀 Fonctionnalités principales
+🔐 Authentification & Sécurité
 
-Mettre en place un système de rôles (admin / employé)
+Authentification JWT (login sécurisé)
 
-Assigner des tâches aux employés
+Activation de compte
 
-Garantir la sécurité des accès et des données
+Changement et réinitialisation de mot de passe
 
-Proposer une application claire, maintenable et testée
+Gestion des rôles (Admin / Employé / Technicien)
 
-🧱 Architecture générale
+Protection des routes (Backend + Frontend)
 
-Frontend : Angular (SPA)
+Accès contrôlé par rôle (RBAC)
 
-Backend : FastAPI (API REST)
+👥 Gestion des utilisateurs
 
-Base de données : PostgreSQL
+Création, modification et suppression d’utilisateurs
 
-ORM : SQLAlchemy
+Attribution des rôles
 
-Authentification : JWT
+Profils utilisateurs détaillés
 
-Tests backend : Pytest
+Activation / désactivation de comptes
 
-Frontend (Angular)
-   ↓ HTTP REST
-Backend (FastAPI)
-   ↓ ORM
-PostgreSQL
+Visualisation des activités
 
-⚙️ Stack technique
+📝 Gestion des tâches
+
+Création et modification de tâches (Admin uniquement)
+
+Assignation des tâches aux employés
+
+Les employés ne voient que les tâches qui leur sont assignées
+
+Statuts de tâches :
+
+en_attente
+
+active
+
+fermee
+
+Catégories et priorités
+
+Historique des mises à jour
+
+Compteur de vues et likes
+
+💬 Commentaires & Fichiers
+
+Commentaires liés aux tâches
+
+Upload de fichiers
+
+Suppression sécurisée des fichiers
+
+Relations :
+
+Utilisateurs ↔ Tâches
+
+Tâches ↔ Commentaires
+
+Tâches ↔ Fichiers
+
+📄 Expérience utilisateur
+
+Pagination
+
+Recherche
+
+Filtres avancés
+
+Interface responsive (Angular)
+
+Navigation fluide SPA
+
+🧱 Architecture du projet
+MonGestionnaireApp/
+├── backend/
+│   ├── app/
+│   │   ├── routers/           # Routes FastAPI
+│   │   ├── models/        # Modèles SQLAlchemy
+│   │   ├── schemas/       # Schémas Pydantic
+│   │   ├── services/      # Logique métier
+│   │   ├── auth/          # JWT / Sécurité
+│   │   ├── tests/         # Tests Pytest
+│   │   └── main.py
+│   ├── Dockerfile
+│   └── requirements.txt
+│
+├── frontend/
+│   ├── src/
+│   ├── Dockerfile
+│   ├── angular.json
+│   └── nginx.conf
+│
+├── docker-compose.yml
+├── .env.example
+└── README.md
+
+🛠️ Stack technique
 Backend
 
 Python 3.11
@@ -44,11 +115,13 @@ FastAPI
 
 SQLAlchemy
 
-Pydantic v2
+PostgreSQL
 
-JWT (authentification sécurisée)
+Pydantic
 
-Pytest (tests automatisés)
+JWT
+
+Pytest
 
 Frontend
 
@@ -58,136 +131,140 @@ TypeScript
 
 HTML / CSS
 
-HttpClient
+RxJS
 
-Gestion des rôles côté UI
+DevOps & Qualité
 
-Base de données
+Docker
+
+Docker Compose
+
+GitHub Actions (CI/CD)
+
+Tests automatisés
+
+Architecture modulaire
+
+🐳 Lancer le projet avec Docker (recommandé)
+✅ Prérequis
+
+Docker
+
+Docker Compose
+
+▶️ Installation
+git clone https://github.com/Muhinyuzi/MonGestionnaireApp.git
+cd MonGestionnaireApp
+cp .env.example .env
+docker-compose up --build
+
+🌐 Accès
+
+Frontend : http://localhost:4200
+
+Backend API : http://localhost:8000
+
+Swagger API Docs : http://localhost:8000/docs
+
+🌱 Seed (données de démonstration)
+
+Pour générer une base propre avec des données de test :
+
+docker-compose exec backend python -m app.db_create
+
+Comptes de test
+Rôle	Email	Mot de passe
+Admin	alice@example.com
+	alice123
+Employé	bob@example.com
+	bob12345
+Technicien	charlie@example.com
+	charl123
+
+Le seed crée automatiquement :
+
+utilisateurs
+
+tâches assignées
+
+fichiers
+
+commentaires
+
+🧪 Tests automatisés (Backend)
+cd backend
+pytest
+
+
+Tests couverts :
+
+Authentification
+
+Utilisateurs
+
+Tâches
+
+Commentaires
+
+Permissions & rôles
+
+Cas d’erreurs (401, 403, 404, 422)
+
+🔄 CI/CD (GitHub Actions)
+
+Pipeline CI intégré :
+
+Lancement automatique des tests à chaque push / PR
+
+Base PostgreSQL isolée pour les tests
+
+Validation du backend
+
+🔐 Gestion des rôles (RBAC)
+Rôle	Droits
+Admin	Gère utilisateurs et tâches
+Employé	Consulte ses tâches assignées
+Technicien	Consulte ses tâches assignées
+
+➡️ Séparation claire des responsabilités, conforme aux pratiques professionnelles.
+
+📦 Base de données
 
 PostgreSQL
 
-Seed automatisé (script de réinitialisation complète)
+Schéma relationnel normalisé
 
-🔐 Gestion des rôles
-👑 Administrateur
+Contraintes d’intégrité
 
-Créer des tâches
+Relations claires entre entités
 
-Assigner des tâches aux employés
+Seed reproductible
 
-Voir toutes les tâches
+🎯 Objectifs du projet
 
-Filtrer par auteur
+✅ Démontrer des compétences Full-Stack
 
-Accéder aux détails complets
+✅ Appliquer les bonnes pratiques professionnelles
 
-👤 Employé
+✅ Être déployable en production
 
-Voir uniquement les tâches qui lui sont assignées
+✅ Servir de projet portfolio pour le marché canadien
 
-Accéder au détail d’une tâche
-
-Ajouter des commentaires
-
-Consulter les fichiers liés
-
-✅ Fonctionnalités principales
-📌 Tâches
-
-Création / consultation / suppression
-
-Assignation à un employé
-
-Catégorie & priorité
-
-Statut (en_attente, active, fermée)
-
-Pagination & tri
-
-Recherche texte
-
-👥 Utilisateurs
-
-Authentification JWT
-
-Rôles (admin / employé)
-
-Équipes
-
-Compte actif / inactif
-
-📎 Fichiers
-
-Upload de fichiers liés aux tâches
-
-Suppression sécurisée
-
-💬 Commentaires
-
-Commentaires associés aux tâches
-
-Historique par tâche
-
-🧪 Tests
-
-Tests unitaires et fonctionnels du backend
-
-Base de données isolée en mode test
-
-Vérification des routes critiques (CRUD, auth, permissions)
-
-🚀 Installation & exécution
-1️⃣ Backend
-cd backend
-python -m venv env
-source env/bin/activate  # Windows: env\Scripts\activate
-pip install -r requirements.txt
-
-2️⃣ Variables d’environnement
-
-Créer un fichier .env :
-
-DATABASE_URL=postgresql://user:password@localhost:5432/mongestionnaire
-JWT_SECRET=supersecretkey
-
-3️⃣ Initialiser la base de données
-
-⚠️ Réinitialise complètement PostgreSQL
-
-python -m app.db_create
-
-4️⃣ Lancer l’API
-uvicorn app.main:app --reload
-
-
-API disponible sur :
-👉 http://127.0.0.1:8000
-
-5️⃣ Frontend
-cd frontend
-npm install
-ng serve
-
-
-Application disponible sur :
-👉 http://localhost:4200
-
-👨‍💻 Auteur
+👤 Auteur
 
 Jean Claude Muhinyuzi
-Développeur Full-Stack (Python / FastAPI / Angular)
 📍 Québec, Canada
+💼 Développement logiciel & télécommunications
+🔗 GitHub : https://github.com/Muhinyuzi
 
-Projet réalisé dans un contexte professionnel et de portfolio, avec une attention particulière portée à l’architecture, à la sécurité et à la maintenabilité.
-
-📈 Évolutions possibles
-
-Résumé automatique des tâches par IA
-
-Recherche intelligente
+✅ Améliorations possibles
 
 Notifications email
 
-Déploiement cloud (Railway / Render / VPS)
+Dashboard & statistiques
 
-💡 Ce projet démontre ma capacité à concevoir et livrer une application complète, structurée et prête pour un environnement professionnel.
+Logs & monitoring
+
+Déploiement cloud (Render, Fly.io, AWS)
+
+IA : résumé automatique des tâches
