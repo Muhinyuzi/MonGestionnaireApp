@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
+import { environment } from '../environments/environment';
 
 // ---------------- TYPES ----------------
 export interface Utilisateur {
@@ -66,7 +67,8 @@ export interface PaginatedUsers {
 export class UtilisateurService {
 
   //private baseUrl = 'http://127.0.0.1:8000/';
-  private baseUrl = 'https://mongestionnaireapp.onrender.com/';
+  //private baseUrl = 'https://mongestionnaireapp.onrender.com/';
+  private baseUrl = `${environment.apiUrl}/`;
 
 
   constructor(private http: HttpClient) {}

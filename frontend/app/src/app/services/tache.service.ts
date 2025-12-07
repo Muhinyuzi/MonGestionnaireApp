@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 /* -------------------------------
         INTERFACES
@@ -102,7 +103,8 @@ export interface TachesResponse {
 export class TacheService {
 
   //private baseUrl = 'http://127.0.0.1:8000/';
-  private baseUrl = 'https://mongestionnaireapp.onrender.com/';
+  //private baseUrl = 'https://mongestionnaireapp.onrender.com/';
+  private baseUrl = `${environment.apiUrl}/`;
 
 
   constructor(private http: HttpClient) {}

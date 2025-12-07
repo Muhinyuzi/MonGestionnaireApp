@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 // ---------------- TYPES ----------------
 
@@ -29,7 +30,8 @@ export interface Commentaire {
 export class CommentaireService {
 
   //private baseUrl = 'http://127.0.0.1:8000/';
-  private baseUrl = 'https://mongestionnaireapp.onrender.com/';
+  //private baseUrl = 'https://mongestionnaireapp.onrender.com/';
+  private baseUrl = `${environment.apiUrl}/`;
 
   constructor(private http: HttpClient) {}
 

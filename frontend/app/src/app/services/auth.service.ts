@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
+import { environment } from '../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -12,7 +13,8 @@ export class AuthService {
   readonly isLoggedIn$ = this._isLoggedIn$.asObservable();
 
   //private readonly API_URL = 'http://127.0.0.1:8000'; // ton backend FastAPI
-  private readonly API_URL = 'https://mongestionnaireapp.onrender.com/';
+  //private readonly API_URL = 'https://mongestionnaireapp.onrender.com/';
+  private readonly API_URL = `${environment.apiUrl}/`;
 
   constructor(private router: Router, private http: HttpClient) {}
 

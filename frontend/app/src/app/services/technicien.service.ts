@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
+import { environment } from '../environments/environment';
 
 export interface Technicien {
   id?: number;
@@ -26,7 +27,8 @@ export interface Technicien {
 export class TechnicienService {
 
   //private baseUrl = 'http://127.0.0.1:8000/';
-  private baseUrl = 'https://mongestionnaireapp.onrender.com/';
+  //private baseUrl = 'https://mongestionnaireapp.onrender.com/';
+  private baseUrl = `${environment.apiUrl}/`;
 
 
   constructor(private http: HttpClient) {}
