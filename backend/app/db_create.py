@@ -1,4 +1,3 @@
-# app/db_create.py
 from __future__ import annotations
 from datetime import datetime, timedelta
 import os
@@ -17,6 +16,9 @@ from app.models.fichier import FichierTache
 # ======================================================
 # ⚙ CONFIG
 # ======================================================
+
+ENV = os.getenv("ENV", "dev")  # dev | demo | prod
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 UPLOAD_DIR = "uploads"
@@ -30,7 +32,14 @@ def hash_password(password: str) -> str:
 
 
 # ======================================================
-# 🔄 RESET SCHEMA — BASE PROPRE
+# 🔍 CHECK DB VIDE
+# ======================================================
+def is_db_empty(session) -> bool:
+    return session.query(Utilisateur).count() == 0
+
+
+# ======================================================
+# 🔄 RESET SCHEMA (DEV / DEMO UNIQUEMENT)
 # ======================================================
 def reset_schema():
     print("💣 RESETTING PostgreSQL PUBLIC SCHEMA...")
@@ -48,13 +57,26 @@ def reset_schema():
 
 
 # ======================================================
-# 🌱 SEED DATA
+# 🌱 SEED DATA (IDEMPOTENT & SAFE)
 # ======================================================
 def seed():
+    print(f"🌱 ENV = {ENV}")
 
-    reset_schema()
+    if ENV == "prod":
+        raise RuntimeError("❌ Seed interdit en production")
 
     with SessionLocal() as session:
+
+        # ✅ DB déjà initialisée → on sort
+        if not is_db_empty(session):
+            print("✅ Base déjà initialisée — seed ignoré")
+            return
+
+        # ✅ Reset autorisé uniquement en dev / demo
+        if ENV in ("dev", "demo"):
+            reset_schema()
+        else:
+            raise RuntimeError("❌ Environnement non autorisé pour le seed")
 
         # ======================================================
         # 1️⃣ UTILISATEURS
@@ -100,7 +122,6 @@ def seed():
 
         users = []
         for u in users_data:
-
             avatar_num = random.randint(1, 80)
 
             user = Utilisateur(
@@ -130,15 +151,15 @@ def seed():
 
         for user in users:
             if user.type == "admin":
-                continue  # 🔥 admin = 0 tâche
+                continue
 
-            for i in range(5):
+            for i in range(5 if ENV == "dev" else 3):
                 tache = Tache(
-                    titre=f"Tâche automatique {i+1} pour {user.nom}",
+                    titre=f"Tâche automatique {i + 1} pour {user.nom}",
                     contenu=f"Contenu auto-généré pour {user.nom}.",
                     equipe=user.equipe,
                     auteur_id=user.id,
-                    assign_to_id=user.id,  # 🔥 l’utilisateur est assigné à lui-même
+                    assign_to_id=user.id,
                     status=random.choice(["en_attente", "active"]),
                     created_at=now - timedelta(days=random.randint(0, 10)),
                     updated_at=now,
@@ -151,10 +172,10 @@ def seed():
                 taches.append(tache)
 
         session.commit()
-        print(f"✅ {len(taches)} tâches générées (5 par employé, 0 pour admin)")
+        print(f"✅ {len(taches)} tâches générées")
 
         # ======================================================
-        # 3️⃣ FICHIERS
+        # 3️⃣ FICHIERS (DEV / DEMO)
         # ======================================================
         fichiers = []
         for tache in taches:
@@ -181,7 +202,7 @@ def seed():
         # ======================================================
         commentaires = []
         for tache in taches:
-            for _ in range(random.randint(0, 3)):
+            for _ in range(random.randint(0, 2)):
                 com = Commentaire(
                     contenu=f"Commentaire automatique sur {tache.titre}",
                     auteur_id=random.choice(users).id,
@@ -197,7 +218,9 @@ def seed():
         print("🎉 SEEDING TERMINÉ AVEC SUCCÈS 🎉")
 
 
-# Run only if not in test mode
+# ======================================================
+# ▶ EXECUTION DIRECTE (DEV LOCAL)
+# ======================================================
 if __name__ == "__main__" and os.getenv("TESTING") != "1":
     seed()
     print("🚀 Base de données initialisée !")
