@@ -28,7 +28,8 @@ export interface Commentaire {
 })
 export class CommentaireService {
 
-  private baseUrl = 'http://127.0.0.1:8000/';
+  //private baseUrl = 'http://127.0.0.1:8000/';
+  private baseUrl = 'https://mongestionnaireapp.onrender.com/';
 
   constructor(private http: HttpClient) {}
 
