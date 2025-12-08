@@ -14,7 +14,7 @@ export class AuthService {
 
   //private readonly API_URL = 'http://127.0.0.1:8000'; // ton backend FastAPI
   //private readonly API_URL = 'https://mongestionnaireapp.onrender.com/';
-  private readonly API_URL = `${environment.apiUrl}/`;
+  private readonly API_URL = `${environment.apiUrl}`;
 
   constructor(private router: Router, private http: HttpClient) {}
 
