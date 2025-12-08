@@ -28,6 +28,8 @@ from app.routers import (
 ENV = os.getenv("ENV", "dev")       # dev | demo | prod
 TESTING = os.getenv("TESTING") == "1"
 
+port = int(os.getenv("PORT", 8000))
+
 # ======================================================
 # 🚀 APP
 # ======================================================
@@ -97,4 +99,4 @@ app.include_router(techniciens.router, prefix="/techniciens", tags=["Techniciens
 # ======================================================
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="127.0.0.1", port=port, reload=True)
