@@ -50,10 +50,6 @@ def startup_event():
 
     print(f"🚀 Application boot — ENV={ENV}")
 
-    # ✅ Seed automatique UNIQUEMENT en demo
-    if ENV == "demo":
-        seed()
-
 
 # ======================================================
 # 🌍 CORS
@@ -83,6 +79,17 @@ app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 @app.get("/")
 def root():
     return {"message": "Bienvenue sur l’API Tâches & Gestion Utilisateurs 🚀"}
+
+
+from fastapi import BackgroundTasks, HTTPException
+
+@app.post("/__seed")
+def seed_database(background_tasks: BackgroundTasks):
+    if ENV != "demo":
+        raise HTTPException(status_code=403, detail="Seed disabled")
+
+    background_tasks.add_task(seed)
+    return {"message": "Seed started in background"}
 
 
 # ======================================================
