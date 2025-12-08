@@ -83,7 +83,7 @@ def root():
 
 from fastapi import BackgroundTasks, HTTPException
 
-@app.post("/__seed")
+@app.get("/__seed")
 def seed_database(background_tasks: BackgroundTasks):
     if ENV != "demo":
         raise HTTPException(status_code=403, detail="Seed disabled")
