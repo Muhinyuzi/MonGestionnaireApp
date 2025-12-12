@@ -223,6 +223,3 @@ Logs & monitoring
 Déploiement cloud avancé (Render, Fly.io, AWS)
 
 IA : résumé automatique des tâches
-
-yaml
-Copier le code
