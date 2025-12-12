@@ -154,9 +154,9 @@ export class UtilisateursComponent implements OnInit {
       next: (user) => {
         this.resetForm();
         this.isAdding = false;
-        this.toast.show("📧 Email d'activation envoyé !");
-        window.location.href = `/email-sent?email=${user.email}`;
-      },
+        this.toast.show(`📧 Email d'activation envoyé à ${user.email} !`, "success");
+        this.loadUsers(); // optionnel: rafraîchir la liste
+    },
       error: () => this.toast.show("❌ Erreur lors de la création", "error")
     });
   }
