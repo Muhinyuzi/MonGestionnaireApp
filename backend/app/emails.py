@@ -9,7 +9,11 @@ from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from app.config import settings
 
 # 🧩 Force le mode test dès le chargement du module (important)
-os.environ.setdefault("TESTING", "1")
+IS_TESTING = (
+    os.getenv("TESTING") == "1"
+    or os.getenv("PYTEST_CURRENT_TEST") is not None
+    or os.getenv("CI") == "true"
+)
 
 # ✅ Détection automatique du mode test / CI
 IS_TESTING = (
@@ -77,7 +81,7 @@ async def send_registration_email(to_email: str, user_name: str, plain_password:
 # 📨 Email d’activation
 # -------------------------------------------------------
 async def send_activation_email(to_email: str, user_name: str, token: str):
-    activation_link = f"http://localhost:4200/activate?token={token}"
+    activation_link = f"http://{settings.FRONTEND_URL}/activate?token={token}"
     message = MessageSchema(
         subject="🔓 Activez votre compte - Gestion Notes",
         recipients=[to_email],
@@ -95,7 +99,7 @@ async def send_activation_email(to_email: str, user_name: str, token: str):
 # 📨 Email de réinitialisation de mot de passe
 # -------------------------------------------------------
 async def send_reset_password_email(to_email: str, user_name: str, token: str):
-    reset_link = f"http://localhost:4200/reset-password?token={token}"
+    reset_link = f"http://{settings.FRONTEND_URL}/reset-password?token={token}"
     message = MessageSchema(
         subject="🔐 Réinitialisation de votre mot de passe - Gestion Notes",
         recipients=[to_email],

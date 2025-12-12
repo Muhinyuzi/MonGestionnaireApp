@@ -33,6 +33,8 @@ class Settings(BaseSettings):
     MAIL_STARTTLS: bool = False
     MAIL_SSL_TLS: bool = True
 
+    FRONTEND_URL: str
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
