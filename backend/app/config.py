@@ -28,10 +28,10 @@ class Settings(BaseSettings):
     MAIL_FROM_NAME: str = "Gestion Notes"
 
     MAIL_SERVER: str = "smtp.gmail.com"
-    MAIL_PORT: int = 465
+    MAIL_PORT: int = 587
 
-    MAIL_STARTTLS: bool = False
-    MAIL_SSL_TLS: bool = True
+    MAIL_STARTTLS: bool = True
+    MAIL_SSL_TLS: bool = False
 
     FRONTEND_URL: str
 
