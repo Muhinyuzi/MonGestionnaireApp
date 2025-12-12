@@ -1,187 +1,168 @@
-📘 MonGestionnaireApp
+# 📘 MonGestionnaireApp
 
-MonGestionnaireApp est une application web full-stack moderne de gestion des employés et des tâches.
-Elle est conçue avec une architecture professionnelle, sécurisée, testée, dockerisée et prête pour la production.
+**MonGestionnaireApp** est une application web **full-stack moderne** dédiée à la **gestion des employés et des tâches**.  
+Elle est conçue avec une architecture professionnelle, sécurisée et prête pour la production, en respectant des standards utilisés en entreprise.
 
-Ce projet sert de projet portfolio et démontre ma maîtrise du backend, frontend, sécurité, DevOps et CI/CD, selon des standards utilisés en entreprise.
+Ce projet sert de **projet portfolio** et démontre mes compétences en **backend**, **frontend**, **sécurité**, ainsi que les bases **DevOps** (Docker, environnements, déploiement).
 
-🚀 Fonctionnalités principales
-🔐 Authentification & Sécurité
+---
 
-Authentification JWT (login sécurisé)
+## 🌐 Démo en ligne (Render)
 
-Activation de compte
+- ✅ **Démo (Frontend)** : https://mongestionnaireapp-1.onrender.com  
+- ✅ **API (Backend)** : https://mongestionnaireapp.onrender.com  
+- ✅ **Swagger / Docs API** : https://mongestionnaireapp.onrender.com/docs  
 
-Changement et réinitialisation de mot de passe
+### 🔑 Comptes de démonstration
+| Rôle        | Email               | Mot de passe |
+|------------|---------------------|--------------|
+| Admin      | alice@example.com   | alice123     |
+| Employé    | bob@example.com     | bob12345     |
+| Technicien | charlie@example.com | charl123     |
 
-Gestion des rôles (Admin / Employé / Technicien)
+> ⚠️ Note : le service Render peut se mettre en veille. Le premier chargement peut prendre quelques secondes.
 
-Protection des routes (Backend + Frontend)
+---
 
-Accès contrôlé par rôle (RBAC)
+## 🎯 Objectifs du projet
 
-👥 Gestion des utilisateurs
+- Démontrer des compétences **Full-Stack professionnelles**
+- Appliquer les **bonnes pratiques backend et frontend**
+- Gérer des environnements **dev / demo / prod**
+- Proposer une application **déployable en production**
+- Servir de **projet portfolio** pour le marché canadien
 
-Création, modification et suppression d’utilisateurs
+---
 
-Attribution des rôles
+## 🚀 Fonctionnalités principales
 
-Profils utilisateurs détaillés
+### 🔐 Authentification & Sécurité
+- Authentification sécurisée via **JWT (OAuth2)**
+- Activation de compte
+- Changement et réinitialisation de mot de passe
+- Gestion des rôles (**Admin / Employé / Technicien**)
+- Protection des routes (Backend & Frontend)
+- **RBAC** – contrôle d’accès par rôle
 
-Activation / désactivation de comptes
+### 👥 Gestion des utilisateurs
+- Création, modification et suppression d’utilisateurs
+- Attribution des rôles
+- Profils utilisateurs détaillés
+- Activation / désactivation de comptes
+- Liste paginée et filtrée
 
-Visualisation des activités
+### 📝 Gestion des tâches
+- Création et modification des tâches (**Admin uniquement**)
+- Assignation des tâches aux employés
+- Accès limité aux tâches assignées
+- Statuts :
+  - `en_attente`
+  - `active`
+  - `fermee`
+- Catégories et priorités
+- Historique des mises à jour
+- Compteurs de vues et de likes
 
-📝 Gestion des tâches
+### 💬 Commentaires & Fichiers
+- Commentaires liés aux tâches
+- Upload de fichiers
+- Suppression sécurisée
+- Relations claires :
+  - Utilisateurs ↔ Tâches
+  - Tâches ↔ Commentaires
+  - Tâches ↔ Fichiers
 
-Création et modification de tâches (Admin uniquement)
+### 📄 Expérience utilisateur
+- Pagination
+- Recherche
+- Filtres avancés
+- Interface responsive (**Angular SPA**)
+- Navigation fluide
 
-Assignation des tâches aux employés
+---
 
-Les employés ne voient que les tâches qui leur sont assignées
+## 🧱 Architecture du projet
 
-Statuts de tâches :
-
-en_attente
-
-active
-
-fermee
-
-Catégories et priorités
-
-Historique des mises à jour
-
-Compteur de vues et likes
-
-💬 Commentaires & Fichiers
-
-Commentaires liés aux tâches
-
-Upload de fichiers
-
-Suppression sécurisée des fichiers
-
-Relations :
-
-Utilisateurs ↔ Tâches
-
-Tâches ↔ Commentaires
-
-Tâches ↔ Fichiers
-
-📄 Expérience utilisateur
-
-Pagination
-
-Recherche
-
-Filtres avancés
-
-Interface responsive (Angular)
-
-Navigation fluide SPA
-
-🧱 Architecture du projet
 MonGestionnaireApp/
 ├── backend/
-│   ├── app/
-│   │   ├── routers/           # Routes FastAPI
-│   │   ├── models/        # Modèles SQLAlchemy
-│   │   ├── schemas/       # Schémas Pydantic
-│   │   ├── services/      # Logique métier
-│   │   ├── auth/          # JWT / Sécurité
-│   │   ├── tests/         # Tests Pytest
-│   │   └── main.py
-│   ├── Dockerfile
-│   └── requirements.txt
+│ ├── app/
+│ │ ├── routers/ # Routes FastAPI
+│ │ ├── models/ # Modèles SQLAlchemy
+│ │ ├── schemas/ # Schémas Pydantic
+│ │ ├── services/ # Logique métier
+│ │ ├── auth/ # JWT & sécurité
+│ │ ├── tests/ # Tests Pytest
+│ │ └── main.py
+│ ├── Dockerfile
+│ └── requirements.txt
 │
 ├── frontend/
-│   ├── src/
-│   ├── Dockerfile
-│   ├── angular.json
-│   └── nginx.conf
+│ ├── src/ # Application Angular
+│ ├── Dockerfile
+│ ├── angular.json
+│ └── nginx.conf
 │
 ├── docker-compose.yml
 ├── .env.example
 └── README.md
 
-🛠️ Stack technique
-Backend
+yaml
+Copier le code
 
-Python 3.11
+---
 
-FastAPI
+## 🛠️ Stack technique
 
-SQLAlchemy
+### Backend
+- Python 3.11
+- FastAPI
+- SQLAlchemy
+- PostgreSQL
+- Pydantic
+- JWT
+- Pytest
 
-PostgreSQL
+### Frontend
+- Angular
+- TypeScript
+- HTML / CSS
+- RxJS
 
-Pydantic
+### DevOps & Qualité
+- Docker
+- Docker Compose
+- Architecture modulaire
+- Environnements séparés (dev / demo / prod)
 
-JWT
+---
 
-Pytest
+## 🐳 Lancer le projet avec Docker (recommandé)
 
-Frontend
+### ✅ Prérequis
+- Docker
+- Docker Compose
 
-Angular
+### ▶️ Installation
 
-TypeScript
-
-HTML / CSS
-
-RxJS
-
-DevOps & Qualité
-
-Docker
-
-Docker Compose
-
-GitHub Actions (CI/CD)
-
-Tests automatisés
-
-Architecture modulaire
-
-🐳 Lancer le projet avec Docker (recommandé)
-✅ Prérequis
-
-Docker
-
-Docker Compose
-
-▶️ Installation
+```bash
 git clone https://github.com/Muhinyuzi/MonGestionnaireApp.git
 cd MonGestionnaireApp
 cp .env.example .env
 docker-compose up --build
-
-🌐 Accès
-
+🌐 Accès en local
 Frontend : http://localhost:4200
 
 Backend API : http://localhost:8000
 
 Swagger API Docs : http://localhost:8000/docs
 
-🌱 Seed (données de démonstration)
+🌱 Seed – Données de démonstration
+Pour générer une base de données de démonstration :
 
-Pour générer une base propre avec des données de test :
-
+bash
+Copier le code
 docker-compose exec backend python -m app.db_create
-
-Comptes de test
-Rôle	Email	Mot de passe
-Admin	alice@example.com
-	alice123
-Employé	bob@example.com
-	bob12345
-Technicien	charlie@example.com
-	charl123
-
-Le seed crée automatiquement :
+Le seed génère automatiquement :
 
 utilisateurs
 
@@ -192,12 +173,11 @@ fichiers
 commentaires
 
 🧪 Tests automatisés (Backend)
+bash
+Copier le code
 cd backend
 pytest
-
-
-Tests couverts :
-
+Tests couverts
 Authentification
 
 Utilisateurs
@@ -210,61 +190,39 @@ Permissions & rôles
 
 Cas d’erreurs (401, 403, 404, 422)
 
-🔄 CI/CD (GitHub Actions)
+🔄 CI/CD (prévu)
+Architecture compatible CI/CD
 
-Pipeline CI intégré :
+Tests automatisés avec Pytest
 
-Lancement automatique des tests à chaque push / PR
+Base de données isolée pour les tests
 
-Base PostgreSQL isolée pour les tests
-
-Validation du backend
+Pipeline GitHub Actions prévu pour exécuter les tests à chaque push / pull request
 
 🔐 Gestion des rôles (RBAC)
-Rôle	Droits
-Admin	Gère utilisateurs et tâches
-Employé	Consulte ses tâches assignées
-Technicien	Consulte ses tâches assignées
+Rôle	Droits principaux
+Admin	Gestion utilisateurs & tâches
+Employé	Consultation de ses tâches
+Technicien	Consultation de ses tâches
 
 ➡️ Séparation claire des responsabilités, conforme aux pratiques professionnelles.
 
-📦 Base de données
-
-PostgreSQL
-
-Schéma relationnel normalisé
-
-Contraintes d’intégrité
-
-Relations claires entre entités
-
-Seed reproductible
-
-🎯 Objectifs du projet
-
-✅ Démontrer des compétences Full-Stack
-
-✅ Appliquer les bonnes pratiques professionnelles
-
-✅ Être déployable en production
-
-✅ Servir de projet portfolio pour le marché canadien
-
 👤 Auteur
-
 Jean Claude Muhinyuzi
 📍 Québec, Canada
 💼 Développement logiciel & télécommunications
 🔗 GitHub : https://github.com/Muhinyuzi
 
-✅ Améliorations possibles
-
+🚀 Améliorations possibles
 Notifications email
 
 Dashboard & statistiques
 
 Logs & monitoring
 
-Déploiement cloud (Render, Fly.io, AWS)
+Déploiement cloud avancé (Render, Fly.io, AWS)
 
 IA : résumé automatique des tâches
+
+yaml
+Copier le code
