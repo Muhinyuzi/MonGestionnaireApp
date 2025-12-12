@@ -32,13 +32,6 @@ def hash_password(password: str) -> str:
 
 
 # ======================================================
-# 🔍 CHECK DB VIDE
-# ======================================================
-def is_db_empty(session) -> bool:
-    return session.query(Utilisateur).count() == 0
-
-
-# ======================================================
 # 🔄 RESET SCHEMA (DEV / DEMO UNIQUEMENT)
 # ======================================================
 def reset_schema():
@@ -57,30 +50,39 @@ def reset_schema():
 
 
 # ======================================================
-# 🌱 SEED DATA (IDEMPOTENT & SAFE)
+# 🌱 SEED DATA (RENDER DEMO SAFE)
 # ======================================================
 def seed():
     print(f"🌱 ENV = {ENV}")
 
+    # ❌ JAMAIS en prod
     if ENV == "prod":
         raise RuntimeError("❌ Seed interdit en production")
 
     with SessionLocal() as session:
 
-        # ✅ DB déjà initialisée → on sort
-        if not is_db_empty(session):
-            print("✅ Base déjà initialisée — seed ignoré")
-            return
+        # ==================================================
+        # 🔥 COMPORTEMENT PAR ENVIRONNEMENT
+        # ==================================================
 
-        # ✅ Reset autorisé uniquement en dev / demo
-        if ENV in ("dev", "demo"):
+        if ENV == "demo":
+            # 👉 Render : reset FORCÉ
             reset_schema()
+
+        elif ENV == "dev":
+            # 👉 Local : reset seulement si DB vide
+            count = session.query(Utilisateur).count()
+            if count > 0:
+                print("✅ Base déjà initialisée — seed ignoré (DEV)")
+                return
+            reset_schema()
+
         else:
             raise RuntimeError("❌ Environnement non autorisé pour le seed")
 
-        # ======================================================
+        # ==================================================
         # 1️⃣ UTILISATEURS
-        # ======================================================
+        # ==================================================
         users_data = [
             {
                 "nom": "Alice",
@@ -143,9 +145,9 @@ def seed():
         session.commit()
         print(f"✅ {len(users)} utilisateurs créés")
 
-        # ======================================================
-        # 2️⃣ TÂCHES — 0 pour admin, 5 par employé
-        # ======================================================
+        # ==================================================
+        # 2️⃣ TÂCHES
+        # ==================================================
         now = datetime.utcnow()
         taches = []
 
@@ -153,7 +155,7 @@ def seed():
             if user.type == "admin":
                 continue
 
-            for i in range(5 if ENV == "dev" else 3):
+            for i in range(3 if ENV == "demo" else 5):
                 tache = Tache(
                     titre=f"Tâche automatique {i + 1} pour {user.nom}",
                     contenu=f"Contenu auto-généré pour {user.nom}.",
@@ -174,9 +176,9 @@ def seed():
         session.commit()
         print(f"✅ {len(taches)} tâches générées")
 
-        # ======================================================
-        # 3️⃣ FICHIERS (DEV / DEMO)
-        # ======================================================
+        # ==================================================
+        # 3️⃣ FICHIERS
+        # ==================================================
         fichiers = []
         for tache in taches:
             for j in range(random.randint(0, 2)):
@@ -197,9 +199,9 @@ def seed():
         session.commit()
         print(f"✅ {len(fichiers)} fichiers ajoutés")
 
-        # ======================================================
+        # ==================================================
         # 4️⃣ COMMENTAIRES
-        # ======================================================
+        # ==================================================
         commentaires = []
         for tache in taches:
             for _ in range(random.randint(0, 2)):
