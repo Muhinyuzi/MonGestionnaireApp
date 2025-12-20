@@ -81,6 +81,18 @@ Ce projet sert de **projet portfolio** et démontre mes compétences en **backen
 
 ---
 
+## 📧 Notifications Email (activation / welcome / reset)
+
+✅ Les notifications email sont **implémentées dans le backend** (emails de bienvenue, activation de compte, réinitialisation de mot de passe).
+
+⚠️ **Dans la démo Render**, l’envoi d’emails peut être **désactivé / non fonctionnel** à cause des restrictions réseau (SMTP sortant) sur certains hébergeurs.
+
+✅ En local (ou en production avec un fournisseur email adapté), la fonctionnalité fonctionne via :
+- **SMTP** (ex: Gmail + App Password)
+- ou un fournisseur transactionnel via **API** (Brevo, Mailgun, SendGrid, etc.)
+
+---
+
 ## 🧱 Architecture du projet
 
 MonGestionnaireApp/
@@ -177,7 +189,8 @@ bash
 Copier le code
 cd backend
 pytest
-Tests couverts
+Tests couverts :
+
 Authentification
 
 Utilisateurs
@@ -197,7 +210,7 @@ Tests automatisés avec Pytest
 
 Base de données isolée pour les tests
 
-Pipeline GitHub Actions prévu pour exécuter les tests à chaque push / pull request
+Pipeline GitHub Actions prévu (tests à chaque push / pull request)
 
 🔐 Gestion des rôles (RBAC)
 Rôle	Droits principaux
@@ -214,12 +227,12 @@ Jean Claude Muhinyuzi
 🔗 GitHub : https://github.com/Muhinyuzi
 
 🚀 Améliorations possibles
-Notifications email
-
 Dashboard & statistiques
 
 Logs & monitoring
 
-Déploiement cloud avancé (Render, Fly.io, AWS)
+Déploiement cloud avancé (Fly.io / AWS)
 
 IA : résumé automatique des tâches
+
+Mise en place CI/CD GitHub Actions
